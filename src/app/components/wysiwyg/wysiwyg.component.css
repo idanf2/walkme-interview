@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex: 1;
+}
+
+.panel {
+  flex: 1;
+}
+
+.drop-zone {
+  flex: 2;
+}

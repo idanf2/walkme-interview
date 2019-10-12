@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+}
+.panel-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  flex: 1;
+}
+
+.element-list {
+  flex: 1;
+}
+
+.shape-style {
+  flex: 2;
+}

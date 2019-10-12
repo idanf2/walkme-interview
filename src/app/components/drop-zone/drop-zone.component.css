@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  border: 2px #333333 dashed;
+  margin: 15px;
+}
+
+.drop-zone {
+  flex: 1;
+}
+
+.droppable {
+  flex: 1;
+  display: flex;
+}

@@ -1,0 +1,13 @@
+.draggable-element {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.draggable-element * {
+  flex: 1;
+}
+
+.name {
+  text-align: center;
+}
