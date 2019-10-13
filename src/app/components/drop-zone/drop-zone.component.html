@@ -1,3 +1,12 @@
-<div droppable class="droppable" viewBox="0 0 100 100">
-  <svg class="drop-zone"></svg>
+<div droppable class="droppable">
+  <svg class="drop-zone">
+    <ng-container *ngFor="let shape of shapes" [ngSwitch]="shape.type">
+      <rect draggable id="{{shape.id}}" class="shape" width="90" height="50" stroke="black" stroke-width="1" attr.fill-opacity="{{shape.opacity}}"
+            [attr.transform]="'translate(' + shape.position.x + ',' + shape.position.y+')'" attr.fill="{{shape.color}}" *ngSwitchCase="allShapeTypes.RECTANGLE"/>
+      <polygon draggable id="{{shape.id}}" class="shape" stroke="black" points="55,0 10,100 100,100" stroke-width="1" attr.fill-opacity="{{shape.opacity}}"
+               [attr.transform]="'translate(' + shape.position.x + ',' + shape.position.y+')'" attr.fill="{{shape.color}}" *ngSwitchCase="allShapeTypes.TRIANGLE"/>-->
+      <circle draggable id="{{shape.id}}" class="shape" r="30" stroke="black" stroke-width="1" attr.fill-opacity="{{shape.opacity}}"
+              [attr.transform]="'translate(' + shape.position.x + ',' + shape.position.y+')'" attr.fill="{{shape.color}}" *ngSwitchCase="allShapeTypes.CIRCLE"/>
+    </ng-container>
+  </svg>
 </div>

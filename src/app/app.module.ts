@@ -12,6 +12,8 @@ import { ShapeStyleComponent } from './components/shape-style/shape-style.compon
 import { DraggableDirective } from './directives/draggable.directive';
 import { DroppableDirective } from './directives/droppable.directive';
 import {SVGService} from './services/svg.service';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,14 @@ import {SVGService} from './services/svg.service';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    })
   ],
   providers: [SVGService],
   bootstrap: [AppComponent]

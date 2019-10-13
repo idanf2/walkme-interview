@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ShapeType} from '../../enums/shape-type.enum';
 
 @Component({
@@ -6,7 +6,7 @@ import {ShapeType} from '../../enums/shape-type.enum';
   templateUrl: './draggable-element.component.html',
   styleUrls: ['./draggable-element.component.css']
 })
-export class DraggableElementComponent implements OnInit {
+export class DraggableElementComponent {
   @Input() shapeName: string;
   @Input() shapeType: ShapeType;
   private allShapeTypes: typeof ShapeType;
@@ -14,8 +14,4 @@ export class DraggableElementComponent implements OnInit {
   constructor() {
     this.allShapeTypes = ShapeType;
   }
-
-  ngOnInit() {
-  }
-
 }

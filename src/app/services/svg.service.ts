@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class SVGService {
-  constructor() {}
+  constructor() {
+  }
 
   getSVGPoint(event, element): SVGPoint {
     // get the mouse coordinates and set them to the SVG point
@@ -11,8 +12,6 @@ export class SVGService {
     point.y = event.clientY;
 
     const CTM = element.viewportElement.getScreenCTM();
-    const svgPoint = point.matrixTransform(CTM.inverse());
-
-    return svgPoint;
+    return point.matrixTransform(CTM.inverse());
   }
 }

@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Shape} from '../../models/shape';
 
 @Component({
   selector: 'wysiwyg',
   templateUrl: './wysiwyg.component.html',
   styleUrls: ['./wysiwyg.component.css']
 })
-export class WysiwygComponent implements OnInit {
-
+export class WysiwygComponent {
+  @Input() shapes: Shape[];
   constructor() { }
-
-  ngOnInit() {
-  }
-
 }
