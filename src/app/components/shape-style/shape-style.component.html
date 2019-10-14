@@ -2,19 +2,29 @@
 
 <div class="properties">
   <div>
+    <label>resize</label>
+    <input *ngIf="selectedShape" [value]="selectedShape.resize" step="0.5" (change)="resize($event)" type="range"
+           min="1" max="10">
+  </div>
+  <div>
     <label>color</label>
-    <p>sdfsdfsd</p>
+    <input class="color-input" [colorPicker]="selectedShape.color" [style.background]="selectedShape.color"
+           (colorPickerChange)="changeColor($event)" *ngIf="selectedShape"/>
   </div>
   <div>
     <label>opacity</label>
-    <p>sdfsdfsd</p>
-  </div>
+    <input *ngIf="selectedShape" [value]="selectedShape.opacity * 100" (change)="changeOpacity($event)" type="range"
+           min="1" max="100"></div>
   <div>
     <label>position</label>
-    <p>sdfsdfsd</p>
+    <span *ngIf="selectedShape">
+      <position-edit [longOrAlt]="'x'" [shape]="selectedShape" [title]="'width'" (positionChanged)="changePosition($event)" style="margin-right: 5px"></position-edit>
+      <position-edit [longOrAlt]="'y'" [shape]="selectedShape" [title]="'height'" (positionChanged)="changePosition($event)"></position-edit>
+    </span>
   </div>
   <div>
     <label>border</label>
-    <p>sdfsdfsd</p>
+    <input *ngIf="selectedShape" type="checkbox" (change)="changeBorderShown($event)"
+           class="border-input" [checked]="selectedShape.isBorderShown"/>
   </div>
 </div>

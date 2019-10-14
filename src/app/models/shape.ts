@@ -4,4 +4,6 @@ export interface Shape {
   position: { x: number, y: number };
   color: string;
   opacity: number;
+  isBorderShown: boolean;
+  resize: number;
 }

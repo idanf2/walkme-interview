@@ -4,7 +4,7 @@ import * as uuid from 'uuid/v1';
 import {Shape} from '../models/shape';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../state/app.state';
-import {AddShapeAction, UpdateShapePositionAction} from '../actions/shape-actions';
+import {AddShapeAction, UpdateSelectedShapeAction, UpdateShapePositionAction} from '../actions/shape-actions';
 
 @Directive({
   selector: '[droppable]'
@@ -35,7 +35,9 @@ export class DroppableDirective {
       type,
       position,
       color: 'black',
-      opacity: 0.3
+      opacity: 1,
+      isBorderShown: false,
+      resize: 1
     };
 
     this.store.dispatch(new AddShapeAction(newShape));
@@ -54,6 +56,7 @@ export class DroppableDirective {
     if (event.target.getAttribute('draggable')) {
       this.draggingElement = event.target;
       this.offset = this.getOffset(this.draggingElement, event);
+      this.store.dispatch(new UpdateSelectedShapeAction(this.draggingElement.id));
     }
   }
 
@@ -80,7 +83,16 @@ export class DroppableDirective {
   }
 
   private setPosition(element, coord: { x, y }, offset?: { x, y }) {
-    element.setAttribute('transform', `translate(${coord.x - offset.x},${coord.y - offset.y})`);
+    // element.setAttribute('transform', `translate(${coord.x - offset.x},${coord.y - offset.y})`);
+    const transforms = element.transform.baseVal;
+    if (transforms.length === 0 ||
+      transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
+      const translate = element.parentNode.createSVGTransform();
+      translate.setTranslate(coord.x - offset.x, coord.y - offset.y);
+      element.transform.baseVal.insertItemBefore(translate, 0);
+    } else if (transforms.length !== 0) {
+      transforms.getItem(0).setTranslate(coord.x - offset.x, coord.y - offset.y);
+    }
   }
 
   private getPosition(coord: { x, y }, offset: { x, y }): { x: number, y: number } {

@@ -1,4 +1,4 @@
-import {ADD_SHAPE, ShapeActions, UPDATE_SHAPE, UPDATE_SHAPE_POSITION} from '../actions/shape-actions';
+import {ADD_SHAPE, ShapeActions, UPDATE_SHAPE, UPDATE_SHAPE_POSITION, UPDATE_SELECTED_SHAPE} from '../actions/shape-actions';
 import {initialShapeState, IShapeState} from '../state/shape.state';
 import {Shape} from '../models/shape';
 
@@ -7,6 +7,7 @@ export const shapeReducers = (state: IShapeState = initialShapeState, action: Sh
     case ADD_SHAPE: {
       return {
         ...state,
+        selectedShapeId: (action.payload as Shape).id,
         shapes: [...state.shapes, action.payload as Shape]
       };
     }
@@ -26,8 +27,9 @@ export const shapeReducers = (state: IShapeState = initialShapeState, action: Sh
       }
     }
     case UPDATE_SHAPE_POSITION: {
-      const updatedPosition: {x: number, y: number} = action.payload.position as {x: number, y: number};
-      const oldShapeIndex: number = state.shapes.findIndex((shape) => shape.id === action.payload.id);
+      const payload = (action.payload as {id: string, position: {x: number, y: number}});
+      const updatedPosition: {x: number, y: number} = payload.position;
+      const oldShapeIndex: number = state.shapes.findIndex((shape) => shape.id === payload.id);
 
       if (oldShapeIndex > -1) {
         const newShapeArray: Shape[] = [...state.shapes];
@@ -36,6 +38,13 @@ export const shapeReducers = (state: IShapeState = initialShapeState, action: Sh
           ...state,
           shapes: newShapeArray
         };
+      } else {
+        return state;
+      }
+    }
+    case UPDATE_SELECTED_SHAPE: {
+      if (action.payload) {
+        return {...state, selectedShapeId: action.payload as string};
       } else {
         return state;
       }

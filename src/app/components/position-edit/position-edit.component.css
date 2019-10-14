@@ -1,0 +1,19 @@
+.position-style {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.text-style {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+
+
+.position-input {
+  width: 80px;
+  height: 20px;
+  margin-right: 3px;
+}

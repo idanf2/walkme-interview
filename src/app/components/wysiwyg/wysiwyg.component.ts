@@ -8,5 +8,6 @@ import {Shape} from '../../models/shape';
 })
 export class WysiwygComponent {
   @Input() shapes: Shape[];
+  @Input() selectedShape: Shape;
   constructor() { }
 }

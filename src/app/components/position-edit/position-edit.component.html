@@ -1,0 +1,7 @@
+<div class="position-style">
+  <label>{{title}}</label>
+  <div class="text-style">
+    <input type="text" (change)="changePosition($event)" class="position-input" [value]="shape.position[longOrAlt] | number:'1.2-2'">
+    <span>px</span>
+  </div>
+</div>

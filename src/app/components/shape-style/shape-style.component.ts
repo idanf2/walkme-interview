@@ -1,15 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Shape} from '../../models/shape';
+import {Store} from '@ngrx/store';
+import {IAppState} from '../../state/app.state';
+import {UpdateShapeAction, UpdateShapePositionAction} from '../../actions/shape-actions';
 
 @Component({
   selector: 'shape-style',
   templateUrl: './shape-style.component.html',
   styleUrls: ['./shape-style.component.css']
 })
-export class ShapeStyleComponent implements OnInit {
+export class ShapeStyleComponent {
+  @Input() selectedShape: Shape;
+  constructor(private store: Store<IAppState>) { }
 
-  constructor() { }
-
-  ngOnInit() {
+  changeColor(color) {
+    this.store.dispatch(new UpdateShapeAction({...this.selectedShape, color}));
+  }
+  resize(event) {
+    this.store.dispatch(new UpdateShapeAction({...this.selectedShape, resize: +event.target.value}));
+  }
+  changeOpacity(event) {
+    this.store.dispatch(new UpdateShapeAction({...this.selectedShape, opacity: event.target.value / 100}));
+  }
+  changeBorderShown(event) {
+    this.store.dispatch(new UpdateShapeAction({...this.selectedShape, isBorderShown: event.target.checked}));
   }
 
+  changePosition(position: { x: number; y: number }) {
+    this.store.dispatch(new UpdateShapePositionAction({id: this.selectedShape.id, position}));
+  }
 }

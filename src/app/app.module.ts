@@ -14,6 +14,8 @@ import { DroppableDirective } from './directives/droppable.directive';
 import {SVGService} from './services/svg.service';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { PositionEditComponent } from './components/position-edit/position-edit.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { reducers, metaReducers } from './reducers';
     DraggableElementComponent,
     ShapeStyleComponent,
     DraggableDirective,
-    DroppableDirective
+    DroppableDirective,
+    PositionEditComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { reducers, metaReducers } from './reducers';
         strictStateImmutability: true,
         strictActionImmutability: true
       }
-    })
+    }),
+    ColorPickerModule
   ],
   providers: [SVGService],
   bootstrap: [AppComponent]
