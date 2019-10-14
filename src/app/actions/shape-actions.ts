@@ -6,6 +6,7 @@ export const ADD_SHAPE = 'ADD_SHAPE';
 export const UPDATE_SHAPE = 'UPDATE_SHAPE';
 export const UPDATE_SHAPE_POSITION = 'UPDATE_SHAPE_POSITION';
 export const UPDATE_SELECTED_SHAPE = 'UPDATE_SELECTED_SHAPE';
+export const RESET_SHAPES = 'RESET_SHAPES';
 
 export class AddShapeAction implements Action {
   type = ADD_SHAPE;
@@ -34,4 +35,11 @@ export class UpdateSelectedShapeAction implements Action {
   }
 }
 
-export type ShapeActions = AddShapeAction | UpdateShapeAction | UpdateShapePositionAction | UpdateSelectedShapeAction;
+export class ResetShapesAction implements Action {
+  type = RESET_SHAPES;
+
+  constructor(public payload: boolean) {
+  }
+}
+
+export type ShapeActions = AddShapeAction | UpdateShapeAction | UpdateShapePositionAction | UpdateSelectedShapeAction | ResetShapesAction;

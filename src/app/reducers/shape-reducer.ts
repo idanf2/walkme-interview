@@ -1,4 +1,11 @@
-import {ADD_SHAPE, ShapeActions, UPDATE_SHAPE, UPDATE_SHAPE_POSITION, UPDATE_SELECTED_SHAPE} from '../actions/shape-actions';
+import {
+  ADD_SHAPE,
+  ShapeActions,
+  UPDATE_SHAPE,
+  UPDATE_SHAPE_POSITION,
+  UPDATE_SELECTED_SHAPE,
+   RESET_SHAPES
+} from '../actions/shape-actions';
 import {initialShapeState, IShapeState} from '../state/shape.state';
 import {Shape} from '../models/shape';
 import {Position} from '../models/position';
@@ -46,6 +53,13 @@ export const shapeReducers = (state: IShapeState = initialShapeState, action: Sh
     case UPDATE_SELECTED_SHAPE: {
       if (action.payload) {
         return {...state, selectedShapeId: action.payload as string};
+      } else {
+        return state;
+      }
+    }
+    case RESET_SHAPES: {
+      if (action.payload) {
+        return {shapes: [], selectedShapeId: null};
       } else {
         return state;
       }
