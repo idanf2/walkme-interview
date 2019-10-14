@@ -1,5 +1,6 @@
 import {Action} from '@ngrx/store';
 import {Shape} from '../models/shape';
+import {Position} from '../models/position';
 
 export const ADD_SHAPE = 'ADD_SHAPE';
 export const UPDATE_SHAPE = 'UPDATE_SHAPE';
@@ -23,7 +24,7 @@ export class UpdateShapeAction implements Action {
 export class UpdateShapePositionAction implements Action {
   type = UPDATE_SHAPE_POSITION;
 
-  constructor(public payload: {id: string, position: { x: number, y: number }}) {
+  constructor(public payload: {id: string, position: Position}) {
   }
 }
 export class UpdateSelectedShapeAction implements Action {

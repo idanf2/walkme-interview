@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Shape} from '../../models/shape';
+import {Position} from '../../models/position';
 
 @Component({
   selector: 'position-edit',
@@ -10,7 +11,7 @@ export class PositionEditComponent {
   @Input() shape: Shape;
   @Input() longOrAlt: string;
   @Input() title: string;
-  @Output() positionChanged: EventEmitter<{ x: number, y: number }>;
+  @Output() positionChanged: EventEmitter<Position>;
 
   constructor() {
     this.positionChanged = new EventEmitter();

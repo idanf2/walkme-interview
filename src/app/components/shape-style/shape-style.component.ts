@@ -3,6 +3,7 @@ import {Shape} from '../../models/shape';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../../state/app.state';
 import {UpdateShapeAction, UpdateShapePositionAction} from '../../actions/shape-actions';
+import {Position} from '../../models/position';
 
 @Component({
   selector: 'shape-style',
@@ -26,7 +27,7 @@ export class ShapeStyleComponent {
     this.store.dispatch(new UpdateShapeAction({...this.selectedShape, isBorderShown: event.target.checked}));
   }
 
-  changePosition(position: { x: number; y: number }) {
+  changePosition(position: Position) {
     this.store.dispatch(new UpdateShapePositionAction({id: this.selectedShape.id, position}));
   }
 }

@@ -1,7 +1,9 @@
+import {Position} from './position';
+
 export interface Shape {
   id: string;
   type: string;
-  position: { x: number, y: number };
+  position: Position;
   color: string;
   opacity: number;
   isBorderShown: boolean;

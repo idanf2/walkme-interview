@@ -5,6 +5,7 @@ import {Shape} from '../models/shape';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../state/app.state';
 import {AddShapeAction, UpdateSelectedShapeAction, UpdateShapePositionAction} from '../actions/shape-actions';
+import {Position} from '../models/position';
 
 @Directive({
   selector: '[droppable]'
@@ -64,7 +65,7 @@ export class DroppableDirective {
   onMouseUp(event): void {
     if (event.target.getAttribute('draggable')) {
       const svgPoint = this.svgService.getSVGPoint(event, this.draggingElement);
-      const position: { x: number, y: number } = this.getPosition({x: svgPoint.x, y: svgPoint.y}, this.offset);
+      const position: Position = this.getPosition({x: svgPoint.x, y: svgPoint.y}, this.offset);
       this.store.dispatch(new UpdateShapePositionAction({id: this.draggingElement.id, position}));
     }
     this.draggingElement = null;
@@ -75,14 +76,14 @@ export class DroppableDirective {
   onMouseLeave(event): void {
     if (event.target.getAttribute('draggable')) {
       const svgPoint = this.svgService.getSVGPoint(event, this.draggingElement);
-      const position: { x: number, y: number } = this.getPosition({x: svgPoint.x, y: svgPoint.y}, this.offset);
+      const position: Position = this.getPosition({x: svgPoint.x, y: svgPoint.y}, this.offset);
       this.store.dispatch(new UpdateShapePositionAction({id: this.draggingElement.id, position}));
     }
     this.draggingElement = null;
     this.offset = null;
   }
 
-  private setPosition(element, coord: { x, y }, offset?: { x, y }) {
+  private setPosition(element, coord: Position, offset?: Position) {
     // element.setAttribute('transform', `translate(${coord.x - offset.x},${coord.y - offset.y})`);
     const transforms = element.transform.baseVal;
     if (transforms.length === 0 ||
@@ -95,7 +96,7 @@ export class DroppableDirective {
     }
   }
 
-  private getPosition(coord: { x, y }, offset: { x, y }): { x: number, y: number } {
+  private getPosition(coord: { x, y }, offset: { x, y }): Position {
     return {x: coord.x - offset.x, y: coord.y - offset.y};
   }
 

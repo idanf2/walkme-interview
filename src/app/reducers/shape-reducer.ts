@@ -1,6 +1,7 @@
 import {ADD_SHAPE, ShapeActions, UPDATE_SHAPE, UPDATE_SHAPE_POSITION, UPDATE_SELECTED_SHAPE} from '../actions/shape-actions';
 import {initialShapeState, IShapeState} from '../state/shape.state';
 import {Shape} from '../models/shape';
+import {Position} from '../models/position';
 
 export const shapeReducers = (state: IShapeState = initialShapeState, action: ShapeActions): IShapeState => {
   switch (action.type) {
@@ -27,8 +28,8 @@ export const shapeReducers = (state: IShapeState = initialShapeState, action: Sh
       }
     }
     case UPDATE_SHAPE_POSITION: {
-      const payload = (action.payload as {id: string, position: {x: number, y: number}});
-      const updatedPosition: {x: number, y: number} = payload.position;
+      const payload = (action.payload as {id: string, position: Position});
+      const updatedPosition: Position = payload.position;
       const oldShapeIndex: number = state.shapes.findIndex((shape) => shape.id === payload.id);
 
       if (oldShapeIndex > -1) {
