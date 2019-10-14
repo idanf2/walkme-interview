@@ -9,9 +9,16 @@
 }
 
 .element-list {
-  flex: 1;
+  flex: 8;
 }
 
 .shape-style {
-  flex: 2;
+  flex: 16;
+}
+
+.buttons {
+  margin-top: 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
 }

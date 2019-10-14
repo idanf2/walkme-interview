@@ -11,3 +11,9 @@
 .name {
   text-align: center;
 }
+
+.shape {
+  stroke: black;
+  stroke-width: 1;
+  fill-opacity: 0.3;
+}

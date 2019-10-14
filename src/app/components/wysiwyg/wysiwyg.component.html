@@ -1,4 +1,12 @@
 <div class="container">
-  <panel class="panel" [selectedShape]="selectedShape"></panel>
-  <drop-zone [shapes]="shapes" class="drop-zone"></drop-zone>
+  <div class="main-comp">
+    <panel class="panel" [selectedShape]="selectedShape"></panel>
+    <drop-zone [shapes]="shapes" class="drop-zone"></drop-zone>
+  </div>
+  <div class="footer">
+      <div class="buttons">
+        <button mat-raised-button color="primary" style="margin-right: 15px">Save</button>
+        <button mat-raised-button color="primary">Clear</button>
+      </div>
+  </div>
 </div>

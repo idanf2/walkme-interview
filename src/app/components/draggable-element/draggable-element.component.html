@@ -1,9 +1,8 @@
 <div draggable [shapeType]="shapeType" class="draggable-element">
   <svg viewBox="0 0 100 100" [ngSwitch]="shapeType">
-    <rect id="rect" class="shape" x="0" y="30" width="90" height="50" stroke="black" stroke-width="1" fill-opacity="0.3" *ngSwitchCase="allShapeTypes.RECTANGLE"/>
-    <polygon id="triangle" class="shape" points="55,0 10,100 100,100" stroke="black" stroke-width="1" fill-opacity="0.3" *ngSwitchCase="allShapeTypes.TRIANGLE"/>
-    <circle id="circle" class="shape" cx="50" cy="50" r="30" stroke="black" stroke-width="1" fill-opacity="0.3" *ngSwitchCase="allShapeTypes.CIRCLE"/>
+    <rect id="rect" class="shape" x="0" y="30" width="90" height="50" *ngSwitchCase="allShapeTypes.RECTANGLE"/>
+    <polygon id="triangle" class="shape" points="55,0 10,100 100,100" *ngSwitchCase="allShapeTypes.TRIANGLE"/>
+    <circle id="circle" class="shape" cx="50" cy="50" r="30" *ngSwitchCase="allShapeTypes.CIRCLE"/>
   </svg>
 </div>
-
 <p class="name">{{shapeName}}</p>

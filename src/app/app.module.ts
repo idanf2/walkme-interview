@@ -16,6 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { PositionEditComponent } from './components/position-edit/position-edit.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PositionEditComponent } from './components/position-edit/position-edit.
         strictActionImmutability: true
       }
     }),
-    ColorPickerModule
+    ColorPickerModule,
+    MatButtonModule
   ],
   providers: [SVGService],
   bootstrap: [AppComponent]

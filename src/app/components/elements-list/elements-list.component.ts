@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {ShapeType} from '../../enums/shape-type.enum';
 
 @Component({
@@ -6,14 +6,10 @@ import {ShapeType} from '../../enums/shape-type.enum';
   templateUrl: './elements-list.component.html',
   styleUrls: ['./elements-list.component.css']
 })
-export class ElementsListComponent implements OnInit {
+export class ElementsListComponent {
   private allShapeTypes: typeof ShapeType;
 
   constructor() {
     this.allShapeTypes = ShapeType;
   }
-
-  ngOnInit() {
-  }
-
 }

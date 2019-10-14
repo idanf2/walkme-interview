@@ -1,17 +1,26 @@
 <div droppable class="droppable">
   <svg class="drop-zone">
     <ng-container *ngFor="let shape of shapes" [ngSwitch]="shape.type">
-      <rect draggable id="{{shape.id}}" class="shape" width="90" height="50" attr.fill-opacity="{{shape.opacity}}"
-            [attr.transform]="'translate(' + shape.position.x + ',' + shape.position.y+') scale(' + shape.resize + ', ' + shape.resize + ')'"
-            attr.fill="{{shape.color}}" *ngSwitchCase="allShapeTypes.RECTANGLE"
+      <rect draggable id="{{shape.id}}" class="shape" width="90" height="50"
+            *ngSwitchCase="allShapeTypes.RECTANGLE"
+            attr.fill-opacity="{{shape.opacity}}"
+            [attr.transform]="'translate(' + shape.position.x + ',' + shape.position.y+') ' +
+                              'scale(' + shape.resize + ', ' + shape.resize + ')'"
+            attr.fill="{{shape.color}}"
             [ngClass]="{'show-border': shape.isBorderShown}"/>
-      <polygon draggable id="{{shape.id}}" class="shape" points="55,0 10,100 100,100" attr.fill-opacity="{{shape.opacity}}"
-               [attr.transform]="'translate(' + shape.position.x + ',' + shape.position.y+') scale(' + shape.resize + ', ' + shape.resize + ')'"
-               attr.fill="{{shape.color}}" *ngSwitchCase="allShapeTypes.TRIANGLE"
+      <polygon draggable id="{{shape.id}}" class="shape" points="55,0 10,100 100,100"
+               *ngSwitchCase="allShapeTypes.TRIANGLE"
+               attr.fill-opacity="{{shape.opacity}}"
+               [attr.transform]="'translate(' + shape.position.x + ',' + shape.position.y+') ' +
+                                 'scale(' + shape.resize + ', ' + shape.resize + ')'"
+               attr.fill="{{shape.color}}"
                [ngClass]="{'show-border': shape.isBorderShown}"/>
-      <circle draggable id="{{shape.id}}" class="shape" r="30" attr.fill-opacity="{{shape.opacity}}"
-              [attr.transform]="'translate(' + shape.position.x + ',' + shape.position.y+') scale(' + shape.resize + ', ' + shape.resize + ')'"
-              attr.fill="{{shape.color}}" *ngSwitchCase="allShapeTypes.CIRCLE"
+      <circle draggable id="{{shape.id}}" class="shape" r="30"
+              *ngSwitchCase="allShapeTypes.CIRCLE"
+              attr.fill-opacity="{{shape.opacity}}"
+              [attr.transform]="'translate(' + shape.position.x + ',' + shape.position.y+') ' +
+                                'scale(' + shape.resize + ', ' + shape.resize + ')'"
+              attr.fill="{{shape.color}}"
               [ngClass]="{'show-border': shape.isBorderShown}"/>
     </ng-container>
   </svg>
