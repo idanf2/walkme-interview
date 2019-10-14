@@ -1,7 +1,7 @@
 import {Directive, HostListener} from '@angular/core';
 import {SVGService} from '../services/svg.service';
 import * as uuid from 'uuid/v1';
-import {Shape} from '../models/shape';
+import {getDefaultShape} from '../models/shape';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../state/app.state';
 import {AddShapeAction, UpdateSelectedShapeAction, UpdateShapePositionAction} from '../actions/shape-actions';
@@ -19,36 +19,20 @@ export class DroppableDirective {
 
   @HostListener('drop', ['$event'])
   onDrop(event) {
-    const dropzone = event.target;
-    const originalElementId = event.dataTransfer.getData('id');
-    const type = event.dataTransfer.getData('type');
-    const offset = JSON.parse(event.dataTransfer.getData('offset'));
+    const originalElementId: string = event.dataTransfer.getData('id');
+    const shapeType: string = event.dataTransfer.getData('type');
+    const offset: Position = JSON.parse(event.dataTransfer.getData('offset'));
     const originalElement = document.getElementById(originalElementId) as any;
     const droppedElement = originalElement.cloneNode(true);
     droppedElement.setAttribute('draggable', true);
-    droppedElement.id = uuid();
-    dropzone.appendChild(droppedElement);
-    const svgPoint = this.svgService.getSVGPoint(event, droppedElement);
-    dropzone.removeChild(droppedElement);
-    const position = this.getPosition({x: svgPoint.x, y: svgPoint.y}, offset);
-    const newShape: Shape = {
-      id: droppedElement.id,
-      type,
-      position,
-      color: 'black',
-      opacity: 1,
-      isBorderShown: false,
-      resize: 1
-    };
-
-    this.store.dispatch(new AddShapeAction(newShape));
+    this.createNewShape(droppedElement, event.target, event, offset, shapeType);
   }
 
   @HostListener('mousemove', ['$event'])
   onMouseMove(event): void {
     if (this.draggingElement) {
       const svgPoint = this.svgService.getSVGPoint(event, this.draggingElement);
-      this.setPosition(this.draggingElement, {x: svgPoint.x, y: svgPoint.y}, this.offset);
+      this.svgService.setPosition(this.draggingElement, {x: svgPoint.x, y: svgPoint.y}, this.offset);
     }
   }
 
@@ -56,68 +40,46 @@ export class DroppableDirective {
   onMouseDown(event): void {
     if (event.target.getAttribute('draggable')) {
       this.draggingElement = event.target;
-      this.offset = this.getOffset(this.draggingElement, event);
+      this.offset = this.svgService.getOffset(this.draggingElement, event);
       this.store.dispatch(new UpdateSelectedShapeAction(this.draggingElement.id));
     }
   }
 
   @HostListener('mouseup', ['$event'])
   onMouseUp(event): void {
-    if (event.target.getAttribute('draggable')) {
-      const svgPoint = this.svgService.getSVGPoint(event, this.draggingElement);
-      const position: Position = this.getPosition({x: svgPoint.x, y: svgPoint.y}, this.offset);
-      this.store.dispatch(new UpdateShapePositionAction({id: this.draggingElement.id, position}));
-    }
-    this.draggingElement = null;
-    this.offset = null;
+    this.updatePositionAndDetach(event);
   }
 
   @HostListener('mouseleave', ['$event'])
   onMouseLeave(event): void {
-    if (event.target.getAttribute('draggable')) {
+    this.updatePositionAndDetach(event);
+  }
+
+  private createNewShape(droppedElement, dropZone, event, offset, shapeType): void {
+    // Generate unique id
+    droppedElement.id = uuid();
+
+    // Append to the dom and remove to knwo the position in the svg
+    dropZone.appendChild(droppedElement);
+    const svgPoint = this.svgService.getSVGPoint(event, droppedElement);
+    dropZone.removeChild(droppedElement);
+    const position = this.getPositionWithOffset(svgPoint, offset);
+
+    this.store.dispatch(new AddShapeAction(getDefaultShape(droppedElement.id, shapeType, position)));
+  }
+
+  private updatePositionAndDetach(event) {
+    if (this.draggingElement) {
       const svgPoint = this.svgService.getSVGPoint(event, this.draggingElement);
-      const position: Position = this.getPosition({x: svgPoint.x, y: svgPoint.y}, this.offset);
+      const position: Position = this.getPositionWithOffset(svgPoint, this.offset);
       this.store.dispatch(new UpdateShapePositionAction({id: this.draggingElement.id, position}));
     }
+
     this.draggingElement = null;
     this.offset = null;
   }
 
-  private setPosition(element, coord: Position, offset?: Position) {
-    // element.setAttribute('transform', `translate(${coord.x - offset.x},${coord.y - offset.y})`);
-    const transforms = element.transform.baseVal;
-    if (transforms.length === 0 ||
-      transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
-      const translate = element.parentNode.createSVGTransform();
-      translate.setTranslate(coord.x - offset.x, coord.y - offset.y);
-      element.transform.baseVal.insertItemBefore(translate, 0);
-    } else if (transforms.length !== 0) {
-      transforms.getItem(0).setTranslate(coord.x - offset.x, coord.y - offset.y);
-    }
-  }
-
-  private getPosition(coord: { x, y }, offset: { x, y }): Position {
-    return {x: coord.x - offset.x, y: coord.y - offset.y};
-  }
-
-  getOffset(selectedElement, event): { x, y } {
-    const offset = this.svgService.getSVGPoint(event, selectedElement);
-    // Get all the transforms currently on this element
-    const transforms = selectedElement.transform.baseVal;
-    // Ensure the first transform is a translate transform
-    if (transforms.length === 0 ||
-      transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
-      // Create an transform that translates by (0, 0)
-      const translate = selectedElement.parentNode.createSVGTransform();
-      translate.setTranslate(0, 0);
-      // Add the translation to the front of the transforms list
-      selectedElement.transform.baseVal.insertItemBefore(translate, 0);
-    }
-    // Get initial translation amount
-    const transform = transforms.getItem(0);
-    offset.x -= transform.matrix.e;
-    offset.y -= transform.matrix.f;
-
-    return offset;
+  private getPositionWithOffset(coordinates: Position, offset: Position): Position {
+    return {x: coordinates.x - offset.x, y: coordinates.y - offset.y};
   }
 }
