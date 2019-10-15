@@ -17,6 +17,7 @@ import { reducers, metaReducers } from './reducers';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { PositionEditComponent } from './components/position-edit/position-edit.component';
 import {MatButtonModule} from '@angular/material/button';
+import {ShapeManagerService} from './services/shape-manager.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import {MatButtonModule} from '@angular/material/button';
     ColorPickerModule,
     MatButtonModule
   ],
-  providers: [SVGService],
+  providers: [SVGService, ShapeManagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

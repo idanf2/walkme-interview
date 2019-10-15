@@ -3,7 +3,8 @@
 <div class="properties">
   <div>
     <label>resize</label>
-    <input *ngIf="selectedShape" [value]="selectedShape.resize" step="0.5" (change)="resize($event)" type="range"
+    <input *ngIf="selectedShape" [value]="selectedShape.resize" class="range-style" step="0.5" (change)="resize($event)"
+           type="range"
            min="1" max="10">
   </div>
   <div>
@@ -13,13 +14,20 @@
   </div>
   <div>
     <label>opacity</label>
-    <input *ngIf="selectedShape" [value]="selectedShape.opacity * 100" (change)="changeOpacity($event)" type="range"
-           min="1" max="100"></div>
+    <div class="opacity-text">
+      <input *ngIf="selectedShape" type="text" class="opacity-input" (change)="changeOpacity($event)"
+             [value]="selectedShape.opacity * 100">
+      <label *ngIf="selectedShape" class="percentage">%</label>
+      <input *ngIf="selectedShape" [value]="selectedShape.opacity * 100" (change)="changeOpacity($event)" type="range"
+             min="1" max="100" class="range-style"></div>
+  </div>
   <div>
     <label>position</label>
     <span *ngIf="selectedShape">
-      <position-edit [longOrAlt]="'x'" [shape]="selectedShape" [title]="'width'" (positionChanged)="changePosition($event)" style="margin-right: 5px"></position-edit>
-      <position-edit [longOrAlt]="'y'" [shape]="selectedShape" [title]="'height'" (positionChanged)="changePosition($event)"></position-edit>
+      <position-edit [longOrAlt]="'x'" [shape]="selectedShape" [title]="'width'"
+                     (positionChanged)="changePosition($event)" style="margin-right: 5px"></position-edit>
+      <position-edit [longOrAlt]="'y'" [shape]="selectedShape" [title]="'height'"
+                     (positionChanged)="changePosition($event)"></position-edit>
     </span>
   </div>
   <div>
