@@ -19,7 +19,7 @@
              [value]="selectedShape.opacity * 100">
       <label *ngIf="selectedShape" class="percentage">%</label>
       <input *ngIf="selectedShape" [value]="selectedShape.opacity * 100" (change)="changeOpacity($event)" type="range"
-             min="1" max="100" class="range-style"></div>
+             min="1" max="100" step="1" class="range-style"></div>
   </div>
   <div>
     <label>position</label>

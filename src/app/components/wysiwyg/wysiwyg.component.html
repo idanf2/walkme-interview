@@ -1,7 +1,7 @@
 <div class="container">
   <div class="main-comp">
-    <panel class="panel" [selectedShape]="selectedShape"></panel>
-    <drop-zone [shapes]="shapes" class="drop-zone"></drop-zone>
+    <panel class="panel" [selectedShape]="selectedShape | async"></panel>
+    <drop-zone [shapes]="shapes | async" class="drop-zone"></drop-zone>
   </div>
   <div class="footer">
       <div class="buttons">

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {Shape} from '../../models/shape';
 import {Store} from '@ngrx/store';
 import {IAppState} from '../../state/app.state';
@@ -8,7 +8,8 @@ import {Position} from '../../models/position';
 @Component({
   selector: 'shape-style',
   templateUrl: './shape-style.component.html',
-  styleUrls: ['./shape-style.component.css']
+  styleUrls: ['./shape-style.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShapeStyleComponent {
   @Input() selectedShape: Shape;
